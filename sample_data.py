@@ -47,6 +47,8 @@ def formatter():
         if not os.path.isfile(file_path):
             continue
 
+        format_json(file_path)
+
 
 if __name__ == '__main__':
     formatter()

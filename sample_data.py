@@ -18,7 +18,9 @@ def format_mongo_js(file_path):
     data = []
     with open(file_path) as data_file:
         for each_line in data_file.readlines():
-            data.append(json.loads(each_line.strip()))
+            json_object = json.loads(each_line.strip())
+            json_object.pop("_id")
+            data.append(json_object)
 
     file_name = f"{file_path.split('/')[-1].split('.')[0]}.js"
     with open(os.path.join(formatted_directory, file_name), 'w') as formatted_data_file:
@@ -32,17 +34,18 @@ def ensure_directory(directory_path):
         os.makedirs(directory_path)
 
 
-def format_json():
-    data_directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
+def format_json(file_path):
+    if not file_path.endswith(".json"):
+        return
+    format_mongo_js(file_path)
+
+
+def formatter():
+    data_directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), "raw_data")
     for each_file in os.listdir(data_directory):
         file_path = os.path.join(data_directory, each_file)
         if not os.path.isfile(file_path):
             continue
-        format_mongo_js(file_path)
-
-
-def formatter():
-    format_json()
 
 
 if __name__ == '__main__':

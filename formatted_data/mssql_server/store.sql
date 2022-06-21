@@ -1,10 +1,3 @@
-CREATE DATABASE braavos;
-
-use braavos;
-
-ALTER DATABASE braavos SET CHANGE_TRACKING = ON
-(CHANGE_RETENTION = 3 DAYS, AUTO_CLEANUP = ON)
-
 /*
 --------------------------------------------------------------------
 © 2017 sqlservertutorial.net All Rights Reserved

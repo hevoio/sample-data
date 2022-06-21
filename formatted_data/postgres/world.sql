@@ -20,10 +20,6 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
---
--- Name: city; Type: TABLE; Schema: public; Owner: root
---
-
 CREATE TABLE public.city (
     id integer NOT NULL,
     name text NOT NULL,
@@ -31,13 +27,6 @@ CREATE TABLE public.city (
     district text NOT NULL,
     population integer NOT NULL
 );
-
-
-ALTER TABLE public.city OWNER TO root;
-
---
--- Name: country; Type: TABLE; Schema: public; Owner: root
---
 
 CREATE TABLE public.country (
     code character(3) NOT NULL,
@@ -60,34 +49,14 @@ CREATE TABLE public.country (
     CONSTRAINT country_continent_check CHECK (((continent = 'Asia'::text) OR (continent = 'Europe'::text) OR (continent = 'North America'::text) OR (continent = 'Africa'::text) OR (continent = 'Oceania'::text) OR (continent = 'Antarctica'::text) OR (continent = 'South America'::text)))
 );
 
-
-ALTER TABLE public.country OWNER TO root;
-
---
--- Name: country_id_seq; Type: SEQUENCE; Schema: public; Owner: root
---
-
 CREATE SEQUENCE public.country_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE public.country_id_seq OWNER TO root;
-
---
--- Name: country_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
---
-
 ALTER SEQUENCE public.country_id_seq OWNED BY public.country.id;
-
-
---
--- Name: countrylanguage; Type: TABLE; Schema: public; Owner: root
---
 
 CREATE TABLE public.countrylanguage (
     countrycode character(3) NOT NULL,
@@ -96,19 +65,7 @@ CREATE TABLE public.countrylanguage (
     percentage real NOT NULL
 );
 
-
-ALTER TABLE public.countrylanguage OWNER TO root;
-
---
--- Name: country id; Type: DEFAULT; Schema: public; Owner: root
---
-
 ALTER TABLE ONLY public.country ALTER COLUMN id SET DEFAULT nextval('public.country_id_seq'::regclass);
-
-
---
--- Data for Name: city; Type: TABLE DATA; Schema: public; Owner: root
---
 
 INSERT INTO public.city (id, name, countrycode, district, population) VALUES (1, 'Kabul', 'AFG', 'Kabol', 1780000);
 INSERT INTO public.city (id, name, countrycode, district, population) VALUES (2, 'Qandahar', 'AFG', 'Qandahar', 237500);
@@ -4435,11 +4392,6 @@ INSERT INTO public.country (code, name, continent, region, surfacearea, indepyea
 INSERT INTO public.country (code, name, continent, region, surfacearea, indepyear, population, lifeexpectancy, gnp, gnpold, localname, governmentform, headofstate, capital, code2, created_at, id) VALUES ('ATF', 'French Southern territories', 'Antarctica', 'Antarctica', 7780, NULL, 0, NULL, 0.00, NULL, 'Terres australes françaises', 'Nonmetropolitan Territory of France', 'Jacques Chirac', NULL, 'TF', '2022-06-21 10:30:51.371672', 238);
 INSERT INTO public.country (code, name, continent, region, surfacearea, indepyear, population, lifeexpectancy, gnp, gnpold, localname, governmentform, headofstate, capital, code2, created_at, id) VALUES ('UMI', 'United States Minor Outlying Islands', 'Oceania', 'Micronesia/Caribbean', 16, NULL, 0, NULL, 0.00, NULL, 'United States Minor Outlying Islands', 'Dependent Territory of the US', 'George W. Bush', NULL, 'UM', '2022-06-21 10:30:51.371672', 239);
 
-
---
--- Data for Name: countrylanguage; Type: TABLE DATA; Schema: public; Owner: root
---
-
 INSERT INTO public.countrylanguage (countrycode, language, isofficial, percentage) VALUES ('AFG', 'Pashto', true, 52.4);
 INSERT INTO public.countrylanguage (countrycode, language, isofficial, percentage) VALUES ('NLD', 'Dutch', true, 95.6);
 INSERT INTO public.countrylanguage (countrycode, language, isofficial, percentage) VALUES ('ANT', 'Papiamento', true, 86.2);
@@ -5432,58 +5384,19 @@ INSERT INTO public.countrylanguage (countrycode, language, isofficial, percentag
 
 SELECT pg_catalog.setval('public.country_id_seq', 239, true);
 
-
---
--- Name: city city_pkey; Type: CONSTRAINT; Schema: public; Owner: root
---
-
 ALTER TABLE ONLY public.city
     ADD CONSTRAINT city_pkey PRIMARY KEY (id);
-
-
---
--- Name: country country_pkey; Type: CONSTRAINT; Schema: public; Owner: root
---
 
 ALTER TABLE ONLY public.country
     ADD CONSTRAINT country_pkey PRIMARY KEY (code);
 
-
---
--- Name: countrylanguage countrylanguage_pkey; Type: CONSTRAINT; Schema: public; Owner: root
---
-
 ALTER TABLE ONLY public.countrylanguage
     ADD CONSTRAINT countrylanguage_pkey PRIMARY KEY (countrycode, language);
-
-
---
--- Name: country country_capital_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
---
 
 ALTER TABLE ONLY public.country
     ADD CONSTRAINT country_capital_fkey FOREIGN KEY (capital) REFERENCES public.city(id);
 
-
---
--- Name: countrylanguage countrylanguage_countrycode_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
---
-
 ALTER TABLE ONLY public.countrylanguage
     ADD CONSTRAINT countrylanguage_countrycode_fkey FOREIGN KEY (countrycode) REFERENCES public.country(code);
 
-
---
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: root
---
-
-REVOKE ALL ON SCHEMA public FROM rdsadmin;
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-GRANT ALL ON SCHEMA public TO root;
 GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
---
--- PostgreSQL database dump complete
---
-

@@ -18,8 +18,6 @@ SET row_security = off;
 
 SET default_tablespace = '';
 
-SET default_table_access_method = heap;
-
 CREATE TABLE public.city (
     id integer NOT NULL,
     name text NOT NULL,
